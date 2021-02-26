@@ -21,8 +21,9 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.system.measureTimeMillis
 
-//Choreographer
 class MainFragment : Fragment() {
     private val TAG = "MainFragment"
     lateinit var navController:NavController
@@ -44,8 +45,21 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController=NavHostFragment.findNavController(this)
         setUpRecyclerView()
+
+        fetchTheData()
+    }
+
+    private fun fetchTheData() {
         GlobalScope.launch (Dispatchers.IO){
-            readTheDataFromFile()
+            measureTimeMillis {
+                val response= ReadDataFromJson.getJsonDataFromAsset(requireContext(), "moviesDB.json").await()
+                //change the thread to main thread
+                withContext(Dispatchers.Main){
+                    useData(response)
+                }
+            }.also {
+                Log.d(TAG, "completed in $it ms")
+            }
         }
     }
 
@@ -60,21 +74,15 @@ class MainFragment : Fragment() {
         }
     }
 
-    //todo try to read the files in
-    private suspend fun readTheDataFromFile() {
-        context?.let {
-            val jsonFileString =
-                ReadDataFromJson.getJsonDataFromAsset(it, "moviesDB.json")
-            jsonFileString?.let { parsed->
-                Log.i(TAG,parsed)
-                progress_bar.visibility=View.GONE
+    private fun useData(jsonFileString: String?){
+        progress_bar.visibility=View.GONE
+        jsonFileString?.let { parsed->
+            Log.i(TAG,parsed)
+            val gson = Gson()
+            val listPersonType = object : TypeToken<List<Movie>>() {}.type
 
-                val gson = Gson()
-                val listPersonType = object : TypeToken<List<Movie>>() {}.type
-
-                var movies: List<Movie> = gson.fromJson(jsonFileString, listPersonType)
-                movieAdapter.differ.submitList(movies)
-            }
+            var movies: List<Movie> = gson.fromJson(jsonFileString, listPersonType)
+            movieAdapter.differ.submitList(movies)
         }
     }
 }
