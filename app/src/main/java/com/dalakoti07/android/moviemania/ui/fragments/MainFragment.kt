@@ -54,6 +54,10 @@ class MainFragment : Fragment() {
         viewModelFactory?.let {
             viewModel= ViewModelProvider(this, it).get(MovieListViewModel::class.java)
         }
+        setUpObservables()
+    }
+
+    private fun setUpObservables() {
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             if(it)
                 progress_bar.visibility=View.VISIBLE

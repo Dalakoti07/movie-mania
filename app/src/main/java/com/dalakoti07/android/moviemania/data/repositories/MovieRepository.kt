@@ -15,6 +15,9 @@ import java.lang.Exception
 import java.util.jar.Attributes
 import kotlin.system.measureTimeMillis
 
+/**
+ * Repository of MVVM layer
+ */
 object MovieRepository {
     private val TAG = "MovieRepository"
     private lateinit var receiverContext:Context

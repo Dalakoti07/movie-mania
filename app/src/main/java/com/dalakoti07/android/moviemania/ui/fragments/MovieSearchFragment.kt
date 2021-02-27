@@ -93,7 +93,7 @@ class MovieSearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if(System.currentTimeMillis()>=lastCalled+1000){
+                if(System.currentTimeMillis()>=lastCalled+100){
                     moviesAdapter.clearData()
                     lastCalled=System.currentTimeMillis()
                     viewModel.searchMoviesOfType(newText.toString())
