@@ -1,4 +1,4 @@
-package com.dalakoti07.android.moviemania.ui
+package com.dalakoti07.android.moviemania.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.dalakoti07.android.moviemania.R
 import com.dalakoti07.android.moviemania.data.models.Movie
 import kotlinx.android.synthetic.main.rv_movie_item.view.*
-import java.lang.Exception
 
 /**
  * Usage of diff utils for better performance

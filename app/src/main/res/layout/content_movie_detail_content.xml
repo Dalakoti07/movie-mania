@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    android:overScrollMode="never"
+    android:scrollbars="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_movie_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_marginRight="@dimen/large_margin"
+            android:layout_marginLeft="@dimen/large_margin"
+            android:id="@+id/ll_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="@dimen/small_margin"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_movie_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/small_heading_text_size"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:textStyle="bold"
+                tools:text="Monster Hunter" />
+            <TextView
+                android:layout_marginEnd="@dimen/small_margin"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:id="@+id/tv_release_date"
+                android:layout_marginTop="@dimen/large_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/large_text_size"
+                android:textStyle="bold"
+                android:text="Release Year:" />
+            <TextView
+                android:textSize="@dimen/large_text_size"
+                android:id="@+id/tv_rating"
+                android:maxLines="1"
+                tools:text="3.4/10.0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_plot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/large_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:text="Plot"
+            android:textSize="@dimen/very_large_text_size"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_desc" />
+
+        <TextView
+            android:id="@+id/tv_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/large_margin"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginRight="@dimen/large_margin"
+            android:textSize="@dimen/small_text_size"
+            app:layout_constraintTop_toBottomOf="@id/tv_plot"
+            tools:text="@string/fake_data" />
+
+        <TextView
+            android:id="@+id/tv_actors"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/large_margin"
+            android:text="Actors"
+            android:textSize="@dimen/large_text_size"
+            app:layout_constraintLeft_toLeftOf="@id/tv_summary"
+            app:layout_constraintTop_toBottomOf="@id/tv_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:overScrollMode="never"
+            android:layout_marginRight="@dimen/large_margin"
+            android:layout_marginLeft="@dimen/large_margin"
+            android:id="@+id/rv_actors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_actors"
+            app:spanCount="2"
+            tools:itemCount="3"
+            tools:listitem="@layout/rv_actor_item" />
+
+        <TextView
+            android:id="@+id/tv_director"
+            android:layout_marginTop="@dimen/large_margin"
+            android:text="Directors"
+            android:textSize="@dimen/large_text_size"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/rv_actors"
+            app:layout_constraintTop_toBottomOf="@id/rv_actors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:textSize="@dimen/large_text_size"
+            tools:text="Tony Robbins"
+            app:layout_constraintLeft_toLeftOf="@id/tv_director"
+            app:layout_constraintTop_toBottomOf="@id/tv_director"
+            android:id="@+id/tv_director_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_genre"
+            android:layout_marginTop="@dimen/large_margin"
+            android:textStyle="bold"
+            android:textSize="@dimen/very_large_text_size"
+            android:text="Genre"
+            app:layout_constraintTop_toBottomOf="@id/tv_director_val"
+            app:layout_constraintLeft_toLeftOf="@id/tv_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_genre"
+            android:layout_marginLeft="@dimen/large_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginRight="@dimen/large_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

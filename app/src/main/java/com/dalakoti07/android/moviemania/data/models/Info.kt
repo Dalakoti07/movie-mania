@@ -1,5 +1,7 @@
 package com.dalakoti07.android.moviemania.data.models
 
+import java.io.Serializable
+
 data class Info(
     val actors: List<String>,
     val directors: List<String>,
@@ -10,4 +12,4 @@ data class Info(
     val rating: Double,
     val release_date: String,
     val running_time_secs: Int
-)
+):Serializable

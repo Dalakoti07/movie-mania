@@ -1,5 +1,7 @@
 package com.dalakoti07.android.moviemania.data.models
 
+import java.io.Serializable
+
 
 /**
 {
@@ -30,4 +32,4 @@ data class Movie(
     val info: Info,
     val title: String,
     val year: Int
-)
+):Serializable

@@ -1,19 +1,19 @@
 package com.dalakoti07.android.moviemania.ui.fragments
 
-import android.opengl.Visibility
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.constraintlayout.solver.widgets.ConstraintWidget.GONE
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.dalakoti07.android.moviemania.R
 import com.dalakoti07.android.moviemania.data.models.Movie
-import com.dalakoti07.android.moviemania.ui.MovieAdapter
+import com.dalakoti07.android.moviemania.ui.adapters.MovieAdapter
+import com.dalakoti07.android.moviemania.utils.Constants
 import com.dalakoti07.android.moviemania.utils.ReadDataFromJson
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -27,7 +27,7 @@ import kotlin.system.measureTimeMillis
 class MainFragment : Fragment() {
     private val TAG = "MainFragment"
     lateinit var navController:NavController
-    lateinit var movieAdapter:MovieAdapter
+    lateinit var movieAdapter: MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +45,19 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController=NavHostFragment.findNavController(this)
         setUpRecyclerView()
-
+        toolbar.titleMarginStart=getValueInPxs(16f)
+        toolbar.setTitle("Movie Mania")
         fetchTheData()
+    }
+
+    private fun getValueInPxs(dpVal: Float): Int {
+        val r: Resources = resources
+        val px = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dpVal,
+            r.displayMetrics
+        )
+        return px.toInt()
     }
 
     private fun fetchTheData() {
@@ -69,8 +80,10 @@ class MainFragment : Fragment() {
             adapter=movieAdapter
         }
         movieAdapter.setOnItemClickListener {
+            val bundle=Bundle()
+            bundle.putSerializable(Constants.movieObject,it)
             //todo make sure that when u come back to main-frag data is not fetched again
-            navController.navigate(R.id.action_mainFragment_to_movieDetailFragment)
+            navController.navigate(R.id.action_mainFragment_to_movieDetailFragment,bundle)
         }
     }
 

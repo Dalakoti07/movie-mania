@@ -17,4 +17,5 @@
     <color name="grey">#686b73</color>
     <color name="dark_pink">#FF4081</color>
     <color name="toolbar_bg">#F0F0F0</color>
+    <color name="fav_color">#1e212d</color>
 </resources>
