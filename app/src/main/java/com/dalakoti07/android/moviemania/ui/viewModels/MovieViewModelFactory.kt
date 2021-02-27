@@ -11,6 +11,10 @@ class MovieViewModelFactory (
 ) : ViewModelProvider.Factory{
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MovieListViewModel(application,movieRepository) as T
+        if(modelClass.isAssignableFrom(MovieListViewModel::class.java))
+            return MovieListViewModel(application,movieRepository) as T
+        if(modelClass.isAssignableFrom(MovieSearchViewModel::class.java))
+            return MovieSearchViewModel(application,movieRepository) as T
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

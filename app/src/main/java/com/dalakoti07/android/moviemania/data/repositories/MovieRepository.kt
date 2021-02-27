@@ -10,10 +10,8 @@ import com.dalakoti07.android.moviemania.utils.YearWiseDataComparators
 import com.dalakoti07.android.moviemania.utils.ReadDataFromJson
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import java.lang.Exception
 import java.util.jar.Attributes
 import kotlin.system.measureTimeMillis
 
@@ -28,6 +26,12 @@ object MovieRepository {
 
     init {
         movieList= MutableLiveData()
+    }
+
+    private val searchMovieList=MutableLiveData<List<Movie>>()
+
+    fun getSearchedList():LiveData<List<Movie>>{
+        return searchMovieList
     }
 
     suspend fun getMoviesFromFile(context: Context){
@@ -78,6 +82,66 @@ object MovieRepository {
 
     suspend fun readFileAgain() {
         performAsyncReading()
+    }
+
+    suspend fun searchMovieWithQuery(searchType: String, query: String) {
+        if(query.length==0)
+            return
+        Log.d(TAG,"searching $searchType with query $query")
+
+        GlobalScope.launch(Dispatchers.IO) {
+            //fetch all movies again
+            val response= ReadDataFromJson.getJsonDataFromAsset(receiverContext, "moviesDB.json").await()
+            val gson = Gson()
+            val listPersonType = object : TypeToken<List<Movie>>() {}.type
+
+            var allMovies: List<Movie> = gson.fromJson(response, listPersonType)
+            Log.d(TAG, "all movies size ${allMovies.size}")
+
+            when(searchType){
+                "genre" -> {
+                    withContext(Dispatchers.Default) {
+                        val validData = arrayListOf<Movie>()
+                        for (movie in allMovies) {
+                            movie.info?.genres?.let {
+                                if (query.toLowerCase() in movie.info.genres.map { it.toLowerCase() })
+                                    validData.add(movie)
+                            }
+                        }
+                        Log.d(TAG, "valid data size ${validData.size}")
+                        searchMovieList.postValue(validData)
+                    }
+                }
+                "actor"-> {
+                    val validData = arrayListOf<Movie>()
+                    for (movie in allMovies) {
+                        movie.info?.actors?.let {
+                            movie.info.actors.map {
+                                if(it.toLowerCase().contains(
+                                                query.toLowerCase()
+                                ))
+                                    validData.add(movie)
+                            }
+                        }
+                    }
+                    Log.d(TAG, "valid data size ${validData.size}")
+                    searchMovieList.postValue(validData)
+                }
+                "rating"-> {
+                    val tempList=allMovies.filter {
+                        query.toDouble() <= it.info.rating
+                    }
+                    searchMovieList.postValue(tempList)
+                }
+                "name"-> {
+                    val tempList=allMovies.filter {
+                         it.title.toLowerCase().contains(query.toLowerCase())
+                    }
+                    searchMovieList.postValue(tempList)
+                }
+            }
+        }
+
     }
 
 }

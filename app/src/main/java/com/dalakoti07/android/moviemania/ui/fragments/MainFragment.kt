@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.dalakoti07.android.moviemania.R
 import com.dalakoti07.android.moviemania.data.repositories.MovieRepository
+import com.dalakoti07.android.moviemania.ui.activities.MainActivity
 import com.dalakoti07.android.moviemania.ui.adapters.MovieAdapter
 import com.dalakoti07.android.moviemania.ui.viewModels.MovieListViewModel
 import com.dalakoti07.android.moviemania.ui.viewModels.MovieViewModelFactory
@@ -64,7 +65,7 @@ class MainFragment : Fragment() {
         })
         navController=NavHostFragment.findNavController(this)
         setUpRecyclerView()
-        toolbar.titleMarginStart=getValueInPxs(16f)
+        toolbar.titleMarginStart=(activity as MainActivity).getValueInPxs(16f)
         toolbar.setTitle("Movie Mania")
     }
 
@@ -110,16 +111,6 @@ class MainFragment : Fragment() {
                     }
                 }
                 .show()
-    }
-
-    private fun getValueInPxs(dpVal: Float): Int {
-        val r: Resources = resources
-        val px = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                dpVal,
-                r.displayMetrics
-        )
-        return px.toInt()
     }
 
     private fun setUpRecyclerView() {

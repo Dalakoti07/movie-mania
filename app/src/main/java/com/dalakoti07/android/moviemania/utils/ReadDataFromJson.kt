@@ -11,7 +11,7 @@ class ReadDataFromJson {
             CoroutineScope(Dispatchers.IO).async{
                 var jsonString: String? = null
                 try {
-                    delay(2000)
+                    delay(1000)
                     jsonString =
                         context.assets.open(fileName).bufferedReader().use { it.readText() }
                 } catch (ioException: IOException) {

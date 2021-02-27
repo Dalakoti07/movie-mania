@@ -11,6 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
 <!--        todo change status bar color to dark blue with white text -->
+<!--        todo make theme as dark not white-->
         <item name="android:statusBarColor" tools:targetApi="l">#1e212d</item>
         <!-- Customize your theme here. -->
 
