@@ -18,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:scrollbars="vertical"
         android:overScrollMode="never"
         android:id="@+id/rv_movies"
         tools:itemCount="5"

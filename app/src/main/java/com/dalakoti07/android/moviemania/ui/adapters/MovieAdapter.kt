@@ -11,28 +11,10 @@ import com.dalakoti07.android.moviemania.R
 import com.dalakoti07.android.moviemania.data.models.Movie
 import kotlinx.android.synthetic.main.rv_movie_item.view.*
 
-/**
- * Usage of diff utils for better performance
- */
 //todo add color palette
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-
+    private val moviesList= arrayListOf<Movie>()
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
-    /**
-     * Assuming that no two movies of same name were release on same date, that would act as unique id
-     */
-    private val differCallBack = object : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.title+oldItem.info.release_date == newItem.title+oldItem.info.release_date
-        }
-
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem == newItem
-        }
-    }
-
-    val differ = AsyncListDiffer(this, differCallBack)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(
@@ -42,8 +24,19 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         )
     }
 
+    fun addData(list:List<Movie>){
+        moviesList.clear()
+        moviesList.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    fun clearData(){
+        moviesList.clear()
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie=differ.currentList[position]
+        val movie= moviesList[position]
         holder.itemView.apply {
             Glide.with(this).load(movie.info.image_url)
                 .into(movie_poster)
@@ -62,7 +55,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return differ.currentList.size
+        return moviesList.size
     };
 
 

@@ -55,7 +55,7 @@ class MovieDetailFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun proliferateTheData() {
         Glide.with(requireContext())
-                .load(movie.info.image_url).fitCenter()
+                .load(movie.info.image_url).centerCrop()
                 .into(iv_movie_cover)
         tv_movie_name.text=movie.title
         tv_release_date.append(movie.year.toString())

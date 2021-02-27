@@ -8,7 +8,7 @@ class ReadDataFromJson {
 
     companion object{
         fun getJsonDataFromAsset(context: Context, fileName: String) =
-            kotlinx.coroutines.CoroutineScope(Dispatchers.IO).async{
+            CoroutineScope(Dispatchers.IO).async{
                 var jsonString: String? = null
                 try {
                     delay(2000)
