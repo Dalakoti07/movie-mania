@@ -1,8 +1,6 @@
-# Music Wiki
+# Movie Mania
 
 <img src="/screenshots/icons.jpg" height="200px"/> <br>
-MusicWiki is an unofficial Last.fm app that contains information about different music genres, the albums, artists and tracks listed under the genre.
-
 
 ##### How to build the project?
 Build the project in studio or write following commands
